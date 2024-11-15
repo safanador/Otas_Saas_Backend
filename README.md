@@ -26,6 +26,14 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+
+## Database setup
+
+```bash
+  # Download and install mysql
+  # Update mysql variables in src/app.module.ts
+```
+
 ## Project setup
 
 ```bash
