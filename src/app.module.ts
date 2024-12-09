@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
-import { RoomsModule } from './rooms/rooms.module';
+import { MailsModule } from './mails/mails.module';
 
 @Module({
   imports: [
@@ -15,12 +15,12 @@ import { RoomsModule } from './rooms/rooms.module';
       port: 3306,
       username: 'root',
       password: '123456',
-      database: 'bingo_db',
+      database: 'operators',
       autoLoadEntities: true,
       synchronize: true,
     }),
     AuthModule,
-    RoomsModule,
+    MailsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
