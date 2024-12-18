@@ -64,7 +64,7 @@ export class AuthService {
 
     const resetToken = await this.jwtService.signAsync(payload);
 
-    const resetUrl = `${process.env.DOMAIN}/ota/auth/reset-password?token=${resetToken}`;
+    const resetUrl = `${process.env.DOMAIN}/auth/reset-password?token=${resetToken}`;
 
     try {
       await this.mailsService.sendResetToken(user.name, user.email, resetUrl);

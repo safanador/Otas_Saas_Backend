@@ -4,6 +4,7 @@ import {
   Column,
   ManyToMany,
   JoinTable,
+  CreateDateColumn,
 } from 'typeorm';
 import { Permission } from '../../permissions/entities/permission.entity';
 
@@ -22,4 +23,6 @@ export class Role {
     inverseJoinColumn: { name: 'permissionId', referencedColumnName: 'id' },
   })
   permissions: Permission[];
+  @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
+  createdAt: Date;
 }
