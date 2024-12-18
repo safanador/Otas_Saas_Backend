@@ -5,6 +5,7 @@ import {
   ManyToMany,
   JoinTable,
   CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Permission } from '../../permissions/entities/permission.entity';
 
@@ -25,4 +26,7 @@ export class Role {
   permissions: Permission[];
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
+
+  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' }) // Columna para la última actualización
+  updatedAt: Date;
 }
