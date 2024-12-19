@@ -15,9 +15,7 @@ export class PermissionsService {
       //user
       'list user',
       'create user',
-      'store user',
       'show user',
-      'edit user',
       'update user',
       'delete user',
       'activate user',
@@ -25,9 +23,7 @@ export class PermissionsService {
       //role
       'list role',
       'create role',
-      'store role',
       'show role',
-      'edit role',
       'update role',
       'delete role',
     ];
@@ -41,5 +37,9 @@ export class PermissionsService {
         await this.permissionRepository.save(permission);
       }
     }
+  }
+
+  async getAllPermissions(): Promise<Permission[]> {
+    return await this.permissionRepository.find();
   }
 }

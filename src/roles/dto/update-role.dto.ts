@@ -1,12 +1,14 @@
-import { IsString, IsArray, IsOptional, IsInt } from 'class-validator';
+import { IsString, IsArray, IsInt, ArrayMinSize } from 'class-validator';
 
 export class UpdateRoleDto {
   @IsString()
-  @IsOptional()
-  name?: string;
+  name: string;
+
+  @IsString()
+  type: string;
 
   @IsArray()
-  @IsOptional()
+  @ArrayMinSize(1, { message: 'Debe seleccionar al menos un permiso.' })
   @IsInt({ each: true })
   permissionIds?: number[];
 }

@@ -9,7 +9,7 @@ async function bootstrap() {
     origin: 'http://localhost:3001', // url del frontend
     credentials: true,
   });
-  app.setGlobalPrefix('api/v1', { exclude: ['/rooms'] });
+  app.setGlobalPrefix('api/v1');
 
   app.useGlobalPipes(
     new ValidationPipe({

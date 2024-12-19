@@ -14,8 +14,11 @@ export class Role {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100 })
   name: string;
+
+  @Column({ type: 'varchar', length: 50 })
+  type: string;
 
   @ManyToMany(() => Permission, (permission) => permission.roles)
   @JoinTable({
@@ -24,6 +27,7 @@ export class Role {
     inverseJoinColumn: { name: 'permissionId', referencedColumnName: 'id' },
   })
   permissions: Permission[];
+
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
 

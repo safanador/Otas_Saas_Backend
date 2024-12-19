@@ -33,7 +33,7 @@ export class RolesService {
   }
 
   async create(createRoleDto: CreateRoleDto): Promise<Role> {
-    const { name, permissionIds } = createRoleDto;
+    const { name, permissionIds, type } = createRoleDto;
 
     const permissions =
       await this.permissionRepository.findByIds(permissionIds);
@@ -41,17 +41,21 @@ export class RolesService {
       throw new NotFoundException('Some permissions were not found');
     }
 
-    const role = this.roleRepository.create({ name, permissions });
+    const role = this.roleRepository.create({ name, permissions, type });
     return this.roleRepository.save(role);
   }
 
   async update(id: number, updateRoleDto: UpdateRoleDto): Promise<Role> {
     const role = await this.findOne(id);
 
-    const { name, permissionIds } = updateRoleDto;
+    const { name, permissionIds, type } = updateRoleDto;
 
     if (name) {
       role.name = name;
+    }
+
+    if (type) {
+      role.type = type;
     }
 
     if (permissionIds) {
