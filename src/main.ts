@@ -1,7 +1,6 @@
-import { ValidationPipe } from '@nestjs/common';
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { IoAdapter } from '@nestjs/platform-socket.io';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,10 +15,16 @@ async function bootstrap() {
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
+      exceptionFactory: (errors) => {
+        const result = errors.map((error) => ({
+          property: error.property,
+          message: error.constraints[Object.keys(error.constraints)[0]],
+        }));
+        return new BadRequestException(result);
+      },
+      stopAtFirstError: true,
     }),
   );
-  // Usa el adaptador de WebSocket
-  app.useWebSocketAdapter(new IoAdapter(app));
 
   await app.listen(3000);
 }
