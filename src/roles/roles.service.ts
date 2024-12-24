@@ -5,66 +5,96 @@ import { Role } from './entities/role.entity';
 import { Permission } from '../permissions/entities/permission.entity';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
+import { Agency } from 'src/agencies/entities/agency.entity';
 
 @Injectable()
 export class RolesService {
   constructor(
     @InjectRepository(Role)
     private readonly roleRepository: Repository<Role>,
+    @InjectRepository(Agency)
+    private readonly agencyRepository: Repository<Agency>,
     @InjectRepository(Permission)
     private readonly permissionRepository: Repository<Permission>,
   ) {}
 
   async findAll(): Promise<Role[]> {
-    return this.roleRepository.find({ relations: ['permissions'] });
+    return this.roleRepository.find({ relations: ['permissions', 'agency'] });
   }
 
   async findOne(id: number): Promise<Role> {
     const role = await this.roleRepository.findOne({
       where: { id },
-      relations: ['permissions'],
+      relations: ['permissions', 'agency'],
     });
 
     if (!role) {
-      throw new NotFoundException(`Role with id ${id} not found`);
+      throw new NotFoundException('Rol no encontrado');
     }
 
     return role;
   }
 
   async create(createRoleDto: CreateRoleDto): Promise<Role> {
-    const { name, permissionIds, type } = createRoleDto;
+    const { name, scope, agencyId, permissions } = createRoleDto;
 
-    const permissions =
-      await this.permissionRepository.findByIds(permissionIds);
-    if (permissions.length !== permissionIds.length) {
-      throw new NotFoundException('Some permissions were not found');
+    const agency = agencyId
+      ? await this.agencyRepository.findOne({ where: { id: agencyId } })
+      : null;
+
+    if (agencyId && !agency) {
+      throw new NotFoundException('Agencia no encontrada');
     }
 
-    const role = this.roleRepository.create({ name, permissions, type });
+    const permissionEntities =
+      await this.permissionRepository.findByIds(permissions);
+
+    if (permissionEntities.length !== permissions.length) {
+      throw new NotFoundException('Algunos permisos no fueron encontrados');
+    }
+
+    const role = this.roleRepository.create({
+      name,
+      scope,
+      agency,
+      permissions: permissionEntities,
+    });
     return this.roleRepository.save(role);
   }
 
   async update(id: number, updateRoleDto: UpdateRoleDto): Promise<Role> {
     const role = await this.findOne(id);
 
-    const { name, permissionIds, type } = updateRoleDto;
+    const { name, permissions, agencyId, scope } = updateRoleDto;
 
     if (name) {
       role.name = name;
     }
 
-    if (type) {
-      role.type = type;
+    if (scope) {
+      role.scope = scope;
     }
 
-    if (permissionIds) {
-      const permissions =
-        await this.permissionRepository.findByIds(permissionIds);
-      if (permissions.length !== permissionIds.length) {
-        throw new NotFoundException('Some permissions were not found');
+    if (agencyId) {
+      const agency = await this.agencyRepository.findOne({
+        where: { id: agencyId },
+      });
+
+      if (!agency) {
+        throw new NotFoundException('Agencia no encontrada');
       }
-      role.permissions = permissions;
+
+      role.agency = agency;
+    }
+
+    if (permissions) {
+      const permissionEntities =
+        await this.permissionRepository.findByIds(permissions);
+
+      if (permissionEntities.length !== permissions.length) {
+        throw new NotFoundException('Algunos permisos no fueron encontrados');
+      }
+      role.permissions = permissionEntities;
     }
 
     return this.roleRepository.save(role);

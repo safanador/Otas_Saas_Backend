@@ -26,13 +26,23 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.usersService.findOne(+id);
+  }
+
+  @Get('agency/:agencyId')
+  async findUsersByAgencyId(@Param('agencyId') agencyId: number) {
+    return this.usersService.findByAgencyId(agencyId);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
+  }
+
+  @Patch(':id/toggle-status')
+  async toggleUserStatus(@Param('id') id: number) {
+    return this.usersService.toggleUserStatus(id);
   }
 
   @Delete(':id')

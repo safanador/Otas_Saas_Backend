@@ -6,8 +6,12 @@ import {
   JoinTable,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { Permission } from '../../permissions/entities/permission.entity';
+import { Agency } from 'src/agencies/entities/agency.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Entity('roles')
 export class Role {
@@ -18,7 +22,16 @@ export class Role {
   name: string;
 
   @Column({ type: 'varchar', length: 50 })
-  type: string;
+  scope: string;
+
+  @ManyToOne(() => Agency, (agency) => agency.roles, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
+  agency: Agency | null;
+
+  @OneToMany(() => User, (user) => user.role)
+  users: User[];
 
   @ManyToMany(() => Permission, (permission) => permission.roles)
   @JoinTable({
@@ -31,6 +44,6 @@ export class Role {
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' }) // Columna para la última actualización
+  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date;
 }

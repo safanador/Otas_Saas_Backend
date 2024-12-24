@@ -1,11 +1,6 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
+import { Role } from 'src/roles/entities/role.entity';
 @Entity('agencies')
 export class Agency {
   @PrimaryGeneratedColumn()
@@ -47,11 +42,15 @@ export class Agency {
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
 
-  @OneToOne(() => User, {
-    cascade: true,
-    onDelete: 'SET NULL',
-    nullable: true,
-  })
-  @JoinColumn()
-  user: User;
+  @OneToMany(() => User, (user) => user.agency)
+  users: User[];
+
+  @OneToMany(() => Role, (role) => role.agency)
+  roles: Role[];
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({ type: 'timestamp', nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
+  updatedAt: Date;
 }

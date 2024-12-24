@@ -13,6 +13,7 @@ import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { MailsService } from 'src/mails/mails.service';
 import { ForgotPassword } from './dto/forgot-password.dto';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -21,17 +22,48 @@ export class AuthService {
     private readonly mailsService: MailsService,
   ) {}
 
-  async register({ name, email, password }: RegisterDto) {
+  async register({
+    name,
+    email,
+    password,
+    image,
+    corporateEmail,
+    dob,
+    phone,
+    address,
+    country,
+    state,
+    city,
+    agencyId,
+    roleId,
+  }: RegisterDto) {
     const user = await this.usersService.findOneByEmail(email);
-
     if (user) {
-      throw new BadRequestException('El usuario ya existe');
+      throw new BadRequestException('El usuario ya existe en nuestro sistema.');
     }
-    return await this.usersService.create({
-      name,
-      email,
-      password: await bcryptjs.hash(password, 10),
-    });
+
+    const payload = { email: email };
+    const resetToken = await this.jwtService.signAsync(payload);
+    const resetUrl = `${process.env.DOMAIN}/auth/reset-password?token=${resetToken}`;
+
+    return await this.usersService.create(
+      {
+        name,
+        email,
+        password: await bcryptjs.hash(password, 10),
+        image,
+        corporateEmail,
+        dob,
+        phone,
+        address,
+        country,
+        state,
+        city,
+        agencyId,
+        roleId,
+      },
+      resetUrl,
+    );
   }
 
   async login({ email, password }: LoginDto) {

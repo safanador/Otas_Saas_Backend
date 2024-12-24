@@ -5,15 +5,14 @@ import { MailerService } from '@nestjs-modules/mailer';
 export class MailsService {
   constructor(private mailerService: MailerService) {}
 
-  async sendUserConfirmation(name: string, email: string) {
-    const url = 'http://localhost:3000';
+  async sendUserConfirmation(name: string, email: string, resetUrl) {
     await this.mailerService.sendMail({
       to: email,
       subject: 'Acount Successfully Created',
       template: './welcome',
       context: {
         name: name,
-        url: url,
+        url: resetUrl,
       },
     });
   }
