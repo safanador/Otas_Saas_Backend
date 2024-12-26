@@ -8,10 +8,10 @@ import { MailsModule } from './mails/mails.module';
 import { RolesModule } from './roles/roles.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { AgenciesModule } from './agencies/agencies.module';
+import { DatabaseSeeder } from './seeds/database.seeder';
 
 @Module({
   imports: [
-    UsersModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -22,6 +22,7 @@ import { AgenciesModule } from './agencies/agencies.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    UsersModule,
     AuthModule,
     MailsModule,
     RolesModule,
@@ -29,6 +30,6 @@ import { AgenciesModule } from './agencies/agencies.module';
     AgenciesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, DatabaseSeeder],
 })
 export class AppModule {}
