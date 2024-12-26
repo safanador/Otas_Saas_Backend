@@ -41,9 +41,21 @@ export class AgenciesService {
     await this.agencyRepository.remove(agency);
   }
 
-  async toggleActiveState(id: number): Promise<Agency> {
+  async toggleActiveState(
+    id: number,
+  ): Promise<{ message: string; agency: Agency }> {
     const agency = await this.findOne(id);
+    if (!agency) {
+      throw new NotFoundException('Agencia no encontrada');
+    }
+
     agency.isActive = !agency.isActive;
-    return this.agencyRepository.save(agency);
+    await this.agencyRepository.save(agency);
+
+    const status = agency.isActive ? 'activada' : 'desactivada';
+    return {
+      message: `La agencia ha sido ${status}`,
+      agency,
+    };
   }
 }
