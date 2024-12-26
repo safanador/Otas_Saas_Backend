@@ -77,7 +77,13 @@ export class AuthService {
       throw new UnauthorizedException('Contraseña incorrecta');
     }
 
-    const payload = { email: user.email };
+    const userPermissions = user.role.permissions.map((p) => p.description);
+    const userScope = user.role.scope;
+    const payload = {
+      email: user.email,
+      scope: userScope,
+      permissions: userPermissions,
+    };
 
     const token = await this.jwtService.signAsync(payload);
 
