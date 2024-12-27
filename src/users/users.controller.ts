@@ -20,6 +20,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @Permissions('create user') // Solo usuarios con este permiso pueden acceder
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }

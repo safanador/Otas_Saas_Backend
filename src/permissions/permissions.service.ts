@@ -26,6 +26,14 @@ export class PermissionsService {
       'show role',
       'update role',
       'delete role',
+
+      //agency
+      'list agency',
+      'create agency',
+      'show agency',
+      'update agency',
+      'delete agency',
+      'activate agency',
     ];
 
     for (const description of defaultPermissions) {

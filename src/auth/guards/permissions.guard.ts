@@ -15,7 +15,7 @@ export class PermissionsGuard implements CanActivate {
     if (!requiredPermissions) return true; // Si no se especifican permisos, permitir acceso.
 
     const request = context.switchToHttp().getRequest();
-    const token = this.extractToken(request); // Extraer el token del encabezado Authorization
+    const token = this.extractTokenFromCookies(request); // Extraer el token del encabezado Authorization
     if (!token) {
       return false; // Bloquear acceso si no hay token
     }
@@ -35,11 +35,11 @@ export class PermissionsGuard implements CanActivate {
   }
 
   // Método para extraer el token del encabezado Authorization
-  private extractToken(request: any): string | null {
-    const authHeader = request.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return null; // Retornar null si el encabezado no existe o no es válido
+  private extractTokenFromCookies(request: any): string | null {
+    const cookies = request.cookies; // Obtener las cookies del request
+    if (!cookies || !cookies.authToken) {
+      return null; // Retornar null si no hay cookies o si falta el token
     }
-    return authHeader.split(' ')[1]; // Retornar el token sin el prefijo "Bearer"
+    return cookies.authToken; // Retornar el token de la cookie `authToken`
   }
 }
