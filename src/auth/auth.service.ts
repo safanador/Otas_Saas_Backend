@@ -89,7 +89,8 @@ export class AuthService {
 
     return {
       token,
-      user,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      user: (({ password, ...rest }) => rest)(user),
     };
   }
 

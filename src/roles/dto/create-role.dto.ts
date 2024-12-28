@@ -5,7 +5,6 @@ import {
   IsNotEmpty,
   IsIn,
   IsOptional,
-  IsNumber,
 } from 'class-validator';
 
 export class CreateRoleDto {
@@ -16,7 +15,6 @@ export class CreateRoleDto {
   scope: string;
 
   @IsOptional()
-  @IsNumber({}, { message: 'El campo nombre no puede estar vacío.' })
   agencyId?: number;
 
   @IsArray()

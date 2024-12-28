@@ -16,6 +16,7 @@ export class PermissionsGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromCookies(request); // Extraer el token del encabezado Authorization
+
     if (!token) {
       return false; // Bloquear acceso si no hay token
     }
@@ -30,7 +31,7 @@ export class PermissionsGuard implements CanActivate {
         user.permissions?.includes(permission),
       );
     } catch {
-      return false; // Bloquear acceso si el token no es válido
+      return false; // Bloquear acceso y redirigir si el token no es válido
     }
   }
 

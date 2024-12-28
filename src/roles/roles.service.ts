@@ -87,6 +87,10 @@ export class RolesService {
       role.agency = agency;
     }
 
+    if (!agencyId) {
+      role.agency = null;
+    }
+
     if (permissions) {
       const permissionEntities =
         await this.permissionRepository.findByIds(permissions);
