@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import * as jwt from 'jsonwebtoken'; // Importar la librería para manejar tokens JWT
 import { jwtConstants } from '../constants/jwt.contans';
@@ -18,7 +23,8 @@ export class PermissionsGuard implements CanActivate {
     const token = this.extractTokenFromCookies(request); // Extraer el token del encabezado Authorization
 
     if (!token) {
-      return false; // Bloquear acceso si no hay token
+      throw new UnauthorizedException('Token no encontrado');
+      //return false; // Bloquear acceso si no hay token
     }
 
     try {
