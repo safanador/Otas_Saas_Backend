@@ -44,6 +44,17 @@ export class AuthController {
     return this.authService.sendPasswordResetToken(forgotPasswordDto);
   }
 
+  @Post('logout')
+  logout(@Res() res: Response) {
+    try {
+      res.clearCookie('authToken');
+      return res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+      console.error('Error clearing cookie:', error);
+      return res.status(400).json({ message: 'Logout error' });
+    }
+  }
+
   @Post('reset-password')
   async resetPassword(@Body() resetPassword: ResetPasswordDto) {
     return this.authService.resetPassword(
