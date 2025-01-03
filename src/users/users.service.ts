@@ -61,8 +61,12 @@ export class UsersService {
     return this.userRepository.findOneBy({ email });
   }
 
-  async findAll(): Promise<User[]> {
-    return await this.userRepository.find();
+  async findAll(agencyId?: number): Promise<User[]> {
+    const whereCondition = agencyId ? { agency: { id: 1 } } : {};
+    return await this.userRepository.find({
+      where: whereCondition,
+      relations: ['agency'],
+    });
   }
 
   async findByAgencyId(agencyId: number): Promise<User[]> {

@@ -7,12 +7,14 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
 import { Permissions } from 'src/auth/decorators/permissions.decorator';
+import { User } from './entities/user.entity';
 
 @Controller('users')
 @UseGuards(PermissionsGuard)
@@ -27,8 +29,8 @@ export class UsersController {
 
   @Get()
   @Permissions('list user') // Solo usuarios con este permiso pueden acceder
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@Query('agencyId') agencyId?: number): Promise<User[]> {
+    return this.usersService.findAll(agencyId);
   }
 
   @Get(':id')
