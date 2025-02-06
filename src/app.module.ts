@@ -9,9 +9,12 @@ import { RolesModule } from './roles/roles.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { AgenciesModule } from './agencies/agencies.module';
 import { DatabaseSeeder } from './seeds/database.seeder';
+import { ImagesModule } from './images/images.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -28,6 +31,7 @@ import { DatabaseSeeder } from './seeds/database.seeder';
     RolesModule,
     PermissionsModule,
     AgenciesModule,
+    ImagesModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseSeeder],
