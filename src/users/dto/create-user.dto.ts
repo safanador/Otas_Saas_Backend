@@ -53,8 +53,7 @@ export class CreateUserDto {
   city: string;
 
   @IsOptional()
-  @IsNumber()
-  agencyId: number;
+  agencyId: number | null;
 
   @IsOptional()
   @IsNumber()

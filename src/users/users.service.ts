@@ -24,12 +24,18 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto, resetUrl?: string) {
     const { agencyId, roleId } = createUserDto;
+    console.log('Ingresa a usersService'); // Verifica que agency sea null cuando agencyId es null
 
-    const agency = await this.agenciesService.findOne(agencyId);
-    if (!agency) {
-      throw new BadRequestException('La agencia no existe en nuestro sistema.');
+    let agency = null;
+    if (agencyId !== null && agencyId !== undefined) {
+      agency = await this.agenciesService.findOne(agencyId);
+      if (!agency) {
+        throw new BadRequestException(
+          'La agencia no existe en nuestro sistema.',
+        );
+      }
     }
-
+    console.log('Agency:', agency); // Verifica que agency sea null cuando agencyId es null
     const role = await this.RolesService.findOne(roleId);
     if (!role) {
       throw new BadRequestException('El rol no existe en nuestro sistema.');
