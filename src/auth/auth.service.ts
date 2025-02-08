@@ -72,6 +72,12 @@ export class AuthService {
       throw new UnauthorizedException('Email incorrecto');
     }
 
+    if (!user.isActive) {
+      throw new UnauthorizedException(
+        'Tu cuenta está inactiva. Contacta al administrador.',
+      );
+    }
+
     const isPasswordValid = await bcryptjs.compare(password, user.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Contraseña incorrecta');

@@ -92,6 +92,7 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('Usuario no encontrado');
     }
+    delete user.password;
     return user;
   }
 
