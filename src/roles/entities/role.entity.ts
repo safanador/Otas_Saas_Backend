@@ -25,6 +25,7 @@ export class Role {
   scope: string;
 
   @ManyToOne(() => Agency, (agency) => agency.roles, {
+    eager: true,
     nullable: true,
     onDelete: 'CASCADE',
   })
