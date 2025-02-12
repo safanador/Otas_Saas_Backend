@@ -1,6 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Role } from 'src/roles/entities/role.entity';
+import { Plan } from 'src/plans/entities/plan.entity';
+import { Subscription } from 'src/subscriptions/entities/subscription.entity';
 @Entity('agencies')
 export class Agency {
   @PrimaryGeneratedColumn()
@@ -47,6 +56,13 @@ export class Agency {
 
   @OneToMany(() => Role, (role) => role.agency)
   roles: Role[];
+
+  @ManyToOne(() => Plan, (plan) => plan.agencies)
+  @JoinColumn({ name: 'planId' })
+  plan: Plan;
+
+  @OneToMany(() => Subscription, (subscription) => subscription.agency)
+  subscriptions: Subscription[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

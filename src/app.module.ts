@@ -11,6 +11,9 @@ import { AgenciesModule } from './agencies/agencies.module';
 import { DatabaseSeeder } from './seeds/database.seeder';
 import { ImagesModule } from './images/images.module';
 import { ConfigModule } from '@nestjs/config';
+import { PlansModule } from './plans/plans.module';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { PaymentsModule } from './payments/payments.module';
 
 @Module({
   imports: [
@@ -32,6 +35,9 @@ import { ConfigModule } from '@nestjs/config';
     PermissionsModule,
     AgenciesModule,
     ImagesModule,
+    PlansModule,
+    SubscriptionsModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseSeeder],
