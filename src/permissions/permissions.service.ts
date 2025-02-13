@@ -34,6 +34,27 @@ export class PermissionsService {
       'update agency',
       'delete agency',
       'activate agency',
+
+      //plan
+      'list plan',
+      'create plan',
+      'show plan',
+      'update plan',
+      'delete plan',
+
+      //subscription
+      'list subscription',
+      'create subscription',
+      'show subscription',
+      'update subscription',
+      'delete subscription',
+
+      //payment
+      'list payment',
+      'create payment',
+      'show payment',
+      'update payment',
+      'delete payment',
     ];
 
     for (const description of defaultPermissions) {
