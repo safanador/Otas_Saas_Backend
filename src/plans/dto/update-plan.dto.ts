@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsBoolean, IsOptional } from 'class-validator';
+import { IsString, IsBoolean, IsOptional } from 'class-validator';
 
 export class UpdatePlanDto {
   @IsString()
@@ -9,11 +9,11 @@ export class UpdatePlanDto {
   @IsOptional()
   description?: string;
 
-  @IsNumber()
+  @IsString()
   @IsOptional()
   price?: number;
 
-  @IsNumber()
+  @IsString()
   @IsOptional()
   durationInDays?: number;
 
