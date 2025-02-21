@@ -21,6 +21,22 @@ export class PaymentService {
     private readonly subscriptionService: SubscriptionService,
   ) {}
 
+  async getAllPayments(): Promise<Payment[]> {
+    return this.paymentRepository.find();
+  }
+
+  async getPaymentById(paymentId: number): Promise<Payment> {
+    const payment = await this.paymentRepository.findOne({
+      where: { id: paymentId },
+    });
+
+    if (!payment) {
+      throw new NotFoundException(`Pago no encontrado`);
+    }
+
+    return payment;
+  }
+
   async createPayment(
     subscriptionId: number,
     amount: number,

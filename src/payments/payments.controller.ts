@@ -13,6 +13,7 @@ import { PaymentService } from './payments.service';
 import { UpdatePaymentStatusDto } from './dto/update-payment.dto';
 import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
 import { Permissions } from 'src/auth/decorators/permissions.decorator';
+import { Payment } from './entities/payment.entity';
 
 @Controller('payments')
 @UseGuards(PermissionsGuard)
@@ -31,6 +32,19 @@ export class PaymentController {
       transactionId,
       status,
     );
+  }
+
+  @Get()
+  @Permissions('list payment')
+  async getAllPayments(): Promise<Payment[]> {
+    return this.paymentService.getAllPayments();
+  }
+
+  @Get(':id')
+  @Permissions('list payment')
+  async getPaymentById(@Param('id') id: string): Promise<Payment> {
+    const paymentId = parseInt(id, 10);
+    return this.paymentService.getPaymentById(paymentId);
   }
 
   @Get('subscription/:subscriptionId')

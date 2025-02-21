@@ -12,7 +12,9 @@ export class Payment {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Subscription, (subscription) => subscription.payments)
+  @ManyToOne(() => Subscription, (subscription) => subscription.payments, {
+    eager: true,
+  })
   @JoinColumn({ name: 'subscriptionId' })
   subscription: Subscription;
 

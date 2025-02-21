@@ -15,11 +15,11 @@ export class Subscription {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Agency, (agency) => agency.subscriptions)
+  @ManyToOne(() => Agency, (agency) => agency.subscriptions, { eager: true })
   @JoinColumn({ name: 'agencyId' })
   agency: Agency;
 
-  @ManyToOne(() => Plan, (plan) => plan.agencies)
+  @ManyToOne(() => Plan, (plan) => plan.agencies, { eager: true })
   @JoinColumn({ name: 'planId' })
   plan: Plan;
 
