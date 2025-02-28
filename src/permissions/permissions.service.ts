@@ -12,6 +12,9 @@ export class PermissionsService {
 
   async seedDefaultPermissions(): Promise<void> {
     const defaultPermissions = [
+      //dashboard
+      'show dashboard',
+
       //user
       'list user',
       'create user',
