@@ -104,8 +104,14 @@ export class RolesService {
     return this.roleRepository.save(role);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<Role> {
     const role = await this.findOne(id);
+
+    if (!role) {
+      throw new NotFoundException('Plan no encontrado');
+    }
+
     await this.roleRepository.remove(role);
+    return role;
   }
 }

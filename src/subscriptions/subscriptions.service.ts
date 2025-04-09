@@ -82,8 +82,20 @@ export class SubscriptionService {
     });
   }
 
-  async cancel(id: number): Promise<void> {
-    await this.subscriptionRepository.update(id, { isActive: false });
+  async cancel(id: number): Promise<Subscription> {
+    const subscription = await this.subscriptionRepository.findOne({
+      where: { id },
+    });
+    if (!subscription) {
+      throw new NotFoundException(`Subscription with id ${id} not found`);
+    }
+
+    subscription.isActive = !subscription.isActive;
+
+    await this.subscriptionRepository.update(id, {
+      isActive: subscription.isActive,
+    });
+    return subscription;
   }
 
   async findAll(): Promise<Subscription[]> {

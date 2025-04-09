@@ -15,6 +15,9 @@ export class PermissionsService {
       //dashboard
       'show dashboard',
 
+      //log
+      'list log',
+
       //user
       'list user',
       'create user',

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Plan } from './entities/plan.entity';
@@ -30,7 +30,16 @@ export class PlanService {
     return this.planRepository.findOne({ where: { id } });
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<Plan> {
+    const plan = await this.planRepository.findOne({
+      where: { id: id },
+    });
+
+    if (!plan) {
+      throw new NotFoundException('Plan no encontrado');
+    }
+
     await this.planRepository.delete(id);
+    return plan;
   }
 }
