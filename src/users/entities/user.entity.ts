@@ -30,6 +30,9 @@ export class User {
   @Column({ nullable: true })
   address: string;
 
+  @Column({ nullable: false })
+  preferredLanguage: string;
+
   @Column({ nullable: true })
   country: string;
 
