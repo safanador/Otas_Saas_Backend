@@ -42,6 +42,9 @@ export class User {
   @Column({ nullable: true })
   city: string;
 
+  @Column({ nullable: true })
+  countryCode: string;
+
   @ManyToOne(() => Agency, (agency) => agency.users, {
     nullable: true,
     onDelete: 'CASCADE',

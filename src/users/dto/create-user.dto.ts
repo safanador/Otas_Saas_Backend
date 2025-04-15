@@ -42,6 +42,10 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsString()
+  countryCode?: string = '';
+
+  @IsOptional()
+  @IsString()
   preferredLanguage?: string = 'en';
 
   @IsOptional()
