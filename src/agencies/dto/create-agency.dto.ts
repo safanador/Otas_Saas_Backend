@@ -24,8 +24,16 @@ export class CreateAgencyDto {
   phone: string;
 
   @IsString()
+  @IsNotEmpty()
+  countryCode: string;
+
+  @IsString()
   @IsOptional()
   phone2?: string;
+
+  @IsString()
+  @IsOptional()
+  countryCode2?: string;
 
   @IsString()
   @IsNotEmpty()

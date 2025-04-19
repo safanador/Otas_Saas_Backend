@@ -28,7 +28,13 @@ export class Agency {
   phone: string;
 
   @Column({ type: 'varchar', length: 20, nullable: true })
+  countryCode?: string;
+
+  @Column({ type: 'varchar', length: 20, nullable: true })
   phone2?: string;
+
+  @Column({ type: 'varchar', length: 20, nullable: true })
+  countryCode2?: string;
 
   @Column({ type: 'varchar', length: 255, nullable: false })
   address: string;
