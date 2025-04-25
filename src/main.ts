@@ -6,7 +6,11 @@ import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: 'http://localhost:3001', // url del frontend
+    origin: [
+      'http://localhost:3001', // Desarrollo
+      'https://cloudnel.com', // Frontend en producción
+      'https://api.cloudnel.com', // Backend
+    ],
     credentials: true,
   });
   app.setGlobalPrefix('api/v1');
