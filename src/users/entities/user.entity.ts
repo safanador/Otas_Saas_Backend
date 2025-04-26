@@ -30,7 +30,9 @@ export class User {
   @Column({ nullable: true })
   address: string;
 
-  @Column({ nullable: false })
+  @Column({
+    default: 'en',
+  })
   preferredLanguage: string;
 
   @Column({ nullable: true })
