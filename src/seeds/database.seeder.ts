@@ -29,19 +29,17 @@ export class DatabaseSeeder {
     // Crear permisos
     const permissionRepository = this.dataSource.getRepository(Permission);
     const permissions = await permissionRepository.save([
-      { id: 1, name: 'show dashboard' },
-      { id: 2, name: 'list log' },
-      { id: 3, name: 'list user' },
-      { id: 4, name: 'create user' },
-      { id: 5, name: 'show user' },
-      { id: 6, name: 'update user' },
-      { id: 7, name: 'delete user' },
-      { id: 8, name: 'activate user' },
-      { id: 9, name: 'list role' },
-      { id: 10, name: 'create role' },
-      { id: 11, name: 'show role' },
-      { id: 12, name: 'update role' },
-      { id: 13, name: 'delete role' },
+      { id: 1, name: 'list user' },
+      { id: 2, name: 'create user' },
+      { id: 3, name: 'show user' },
+      { id: 4, name: 'update user' },
+      { id: 5, name: 'delete user' },
+      { id: 6, name: 'activate user' },
+      { id: 7, name: 'list role' },
+      { id: 8, name: 'create role' },
+      { id: 9, name: 'show role' },
+      { id: 10, name: 'update role' },
+      { id: 11, name: 'delete role' },
     ]);
 
     // Crear roles
