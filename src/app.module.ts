@@ -27,7 +27,7 @@ import { PaymentsModule } from './payments/payments.module';
       database: 'operators',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: true,
     }),
     UsersModule,
     AuthModule,
