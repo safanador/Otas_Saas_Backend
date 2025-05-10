@@ -3,7 +3,6 @@ import {
   Injectable,
   NotFoundException,
   RequestTimeoutException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { RegisterDto } from './dto/register.dto';
@@ -69,18 +68,20 @@ export class AuthService {
   async login({ email, password }: LoginDto) {
     const user = await this.usersService.findOneByEmail(email);
     if (!user) {
-      throw new UnauthorizedException('Email incorrecto');
+      throw new BadRequestException(
+        'Este usuario no existe en nuestro sistema.',
+      );
     }
 
     if (!user.isActive) {
-      throw new UnauthorizedException(
+      throw new BadRequestException(
         'Tu cuenta está inactiva. Contacta al administrador.',
       );
     }
 
     const isPasswordValid = await bcryptjs.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Contraseña incorrecta');
+      throw new BadRequestException('Contraseña incorrecta');
     }
 
     const userPermissions = user.role.permissions.map((p) => p.description);
