@@ -42,6 +42,14 @@ export class RegisterDto {
 
   @IsOptional()
   @IsString()
+  countryCode: string;
+
+  @IsOptional()
+  @IsString()
+  preferredLanguage: string;
+
+  @IsOptional()
+  @IsString()
   country: string;
 
   @IsOptional()

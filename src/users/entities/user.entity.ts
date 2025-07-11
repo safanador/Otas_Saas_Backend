@@ -44,7 +44,7 @@ export class User {
   @Column({ nullable: true })
   city: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: '57' })
   countryCode: string;
 
   @ManyToOne(() => Agency, (agency) => agency.users, {
