@@ -1,6 +1,15 @@
 import { Agency } from 'src/agencies/entities/agency.entity';
+import { Booking } from 'src/bookings/entities/booking.entity';
 import { Role } from 'src/roles/entities/role.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { SupportResponse } from 'src/support/entities/support-response.entity';
+import { SupportMessage } from 'src/support/entities/support.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -22,7 +31,7 @@ export class User {
   corporateEmail: string;
 
   @Column({ nullable: true })
-  dob: string;
+  dob: Date;
 
   @Column({ nullable: true })
   phone: string;
@@ -61,6 +70,15 @@ export class User {
 
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
+
+  @OneToMany(() => SupportMessage, (supportMessage) => supportMessage.createdBy)
+  supportMessages: SupportMessage[];
+
+  @OneToMany(() => SupportResponse, (response) => response.author)
+  supportResponses: SupportResponse[];
+
+  @OneToMany(() => Booking, (booking) => booking.createdByUser)
+  bookings: Booking[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

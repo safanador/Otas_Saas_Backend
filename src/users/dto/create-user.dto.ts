@@ -1,5 +1,6 @@
 import { Transform } from 'class-transformer';
 import {
+  IsDateString,
   IsEmail,
   IsNumber,
   IsOptional,
@@ -30,6 +31,7 @@ export class CreateUserDto {
   corporateEmail: string;
 
   @IsOptional()
+  @IsDateString()
   dob: string;
 
   @IsOptional()

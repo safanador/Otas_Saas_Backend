@@ -61,6 +61,13 @@ export class PermissionsService {
 
       //log
       'list log',
+
+      //category
+      'list category',
+      'create category',
+      'show category',
+      'update category',
+      'delete category',
     ];
 
     for (const description of defaultPermissions) {

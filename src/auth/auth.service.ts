@@ -91,8 +91,10 @@ export class AuthService {
     const userPermissions = user.role.permissions.map((p) => p.description);
     const userScope = user.role.scope;
     const payload = {
+      id: user.id,
       email: user.email,
       scope: userScope,
+      agencyId: user.role.agency ? user.role.agency.id : null,
       permissions: userPermissions,
     };
 

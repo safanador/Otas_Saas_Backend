@@ -10,6 +10,8 @@ import { User } from 'src/users/entities/user.entity';
 import { Role } from 'src/roles/entities/role.entity';
 import { Plan } from 'src/plans/entities/plan.entity';
 import { Subscription } from 'src/subscriptions/entities/subscription.entity';
+import { SupportMessage } from 'src/support/entities/support.entity';
+import { Tour } from 'src/tours/entities/tour.entity';
 @Entity('agencies')
 export class Agency {
   @PrimaryGeneratedColumn()
@@ -69,6 +71,12 @@ export class Agency {
 
   @OneToMany(() => Subscription, (subscription) => subscription.agency)
   subscriptions: Subscription[];
+
+  @OneToMany(() => SupportMessage, (supportMessage) => supportMessage.agency)
+  supportMessages: SupportMessage[];
+
+  @OneToMany(() => Tour, (tour) => tour.agency)
+  tours: Tour[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

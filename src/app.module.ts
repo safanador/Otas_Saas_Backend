@@ -14,6 +14,11 @@ import { ConfigModule } from '@nestjs/config';
 import { PlansModule } from './plans/plans.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { PaymentsModule } from './payments/payments.module';
+import { SupportModule } from './support/support.module';
+import { CategoriesModule } from './categories/categories.module';
+import { ToursModule } from './tours/tours.module';
+import { ClientsModule } from './clients/clients.module';
+import { BookingsModule } from './bookings/bookings.module';
 
 @Module({
   imports: [
@@ -39,6 +44,11 @@ import { PaymentsModule } from './payments/payments.module';
     PlansModule,
     SubscriptionsModule,
     PaymentsModule,
+    SupportModule,
+    CategoriesModule,
+    ToursModule,
+    ClientsModule,
+    BookingsModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseSeeder],

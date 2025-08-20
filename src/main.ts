@@ -3,6 +3,31 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 
+function extractValidationErrors(errors, parentProperty = '') {
+  return errors.flatMap((error) => {
+    const propertyPath = parentProperty
+      ? `${parentProperty}.${error.property}`
+      : error.property;
+
+    const messages = [];
+
+    if (error.constraints) {
+      messages.push(
+        ...Object.values(error.constraints).map((msg) => ({
+          property: propertyPath,
+          message: msg,
+        })),
+      );
+    }
+
+    if (error.children && error.children.length > 0) {
+      messages.push(...extractValidationErrors(error.children, propertyPath));
+    }
+
+    return messages;
+  });
+}
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
@@ -21,10 +46,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
       transform: true,
       exceptionFactory: (errors) => {
-        const result = errors.map((error) => ({
-          property: error.property,
-          message: error.constraints[Object.keys(error.constraints)[0]],
-        }));
+        const result = extractValidationErrors(errors);
         return new BadRequestException(result);
       },
       stopAtFirstError: true,
